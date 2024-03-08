@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/provider/ThemeProvider";
 import { Inter as FontSans } from "next/font/google";
 import { Header } from "./Header";
 
@@ -19,8 +20,15 @@ export const Layout = ({ children }: LayoutProps) => {
         fontSans.variable
       )}
     >
-      <Header />
-      {children}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <Header />
+        {children}
+      </ThemeProvider>
     </div>
   );
 };
