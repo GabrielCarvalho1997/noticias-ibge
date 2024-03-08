@@ -6,15 +6,31 @@ interface News {
   description: string;
 }
 
+// Adicionando novos parâmetros de consulta
 interface Params {
-  qtd?: number;
-  page?: number;
-  itensPerPage: number;
+  de?: string;
+  ate?: string;
+  destaque?: boolean;
+  introsize?: number;
+  busca?: string;
 }
 
-export const getAllNews = async (params: Params): Promise<News[]> => {
-  const { qtd, page, itensPerPage } = params;
-  const queryString = `?qtd=${qtd}&page=${page}&itensPorPagina=${itensPerPage}`;
-  const { data } = await api.get<News[]>(`/news${queryString}`);
-  return data;
+export const getFilteredNews = async (params: Params): Promise<News[]> => {
+  const { de, ate, destaque, introsize, busca } = params;
+
+  try {
+    const { data } = await api.get<News[]>("", {
+      params: {
+        de: de,
+        ate: ate,
+        destaque: destaque,
+        introsize: introsize,
+        busca: busca,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(`Failed to get filtered news: ${error}`);
+    return [];
+  }
 };
