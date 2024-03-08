@@ -6,7 +6,7 @@ interface News {
   description: string;
 }
 
-export const getAllNews = async () => {
-  const { data } = await api.get<News[]>("/news");
+export const getAllNews = async (params: Params): Promise<News[]> => {
+  const { data } = await api.get<News[]>('/news');
   return data;
 };

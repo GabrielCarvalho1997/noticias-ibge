@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://seu-endereco-api.com",
+  baseURL: "http://servicodados.ibge.gov.br/api/v3/noticias/",
   headers: {
     "Content-Type": "application/json",
   },
