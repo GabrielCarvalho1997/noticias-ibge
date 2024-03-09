@@ -1,41 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { getNewsById } from "@/services/getNewsById";
+import { Card } from "@/components/ui/card";
+import { API_URL_IMAGE } from "@/constants";
+import { getAllNews } from "@/services/getAllNews";
 import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 
 const Home = () => {
   const { theme, setTheme } = useTheme();
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["news"],
-  //   queryFn: getAllNews,
-  // });
-
-  // Busca uma noticia unica
   const { data, isLoading, isError } = useQuery({
     queryKey: ["news"],
-    queryFn: () => getNewsById("39365"),
+    queryFn: getAllNews,
   });
-
-  // {
-  //   isLoading ? (
-  //     <p>Carregando...</p>
-  //   ) : isError ? (
-  //     <p>Ocorreu um erro ao carregar os dados</p>
-  //   ) : (
-  //     <ul>
-  //       {data?.map((news) => (
-  //         <li key={news.id}>
-  //           <h2>{news.title}</h2>
-  //           <p>{news.description}</p>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   );
-  // }
-
-  console.log(data);
 
   return (
     <>
@@ -51,6 +29,27 @@ const Home = () => {
           Trocar o tema
         </Button>
         <Link href="/news">Ir para a notícia</Link>
+        {isLoading && <p>Carregando...</p>}
+        {isError && <p>Ocorreu um erro ao carregar as notícias</p>}
+        <div className="grid grid-cols-3 gap-4">
+          {data?.items?.map((news) => {
+            const images = JSON.parse(news.imagens);
+            return (
+              <Card key={news.id} className="col-span-1">
+                <Image
+                  src={API_URL_IMAGE + images.image_intro}
+                  alt={news.titulo}
+                  width={300}
+                  height={200}
+                  priority
+                  unoptimized
+                />
+                <h2>{news.titulo}</h2>
+                <p>{news.introducao}</p>
+              </Card>
+            );
+          })}
+        </div>
       </main>
     </>
   );
