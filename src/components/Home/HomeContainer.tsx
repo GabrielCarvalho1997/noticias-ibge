@@ -27,7 +27,7 @@ const HomeContainer = () => {
           return <CardContainer key={news.id} news={news} />;
         })}
         <Button
-          className="w-32"
+          className="w-32 hover:scale-105 hover:bg-primary"
           onClick={() => {
             setPerPage(perPage + 12);
           }}

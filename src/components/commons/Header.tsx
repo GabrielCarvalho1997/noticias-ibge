@@ -13,7 +13,7 @@ import {
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: "500",
+  weight: ["500", "700"],
 });
 
 export const Header = () => {
@@ -23,9 +23,11 @@ export const Header = () => {
     <header
       className={`${roboto.className} text-sm flex py-3 px-5 justify-between items-center sticky top-0 z-20 bg-primary`}
     >
-      <Link href="/">Página Inicial</Link>
-      <nav className="hidden md:flex items-center gap-10 text-md">
-        <a href={SITE_IBGE} target="_blank">
+      <Link href="/" className="text-xl	font-bold text-primary-foreground">
+        Início
+      </Link>
+      <nav className="hidden md:flex items-center gap-10 text-md ">
+        <a href={SITE_IBGE} target="_blank" className="text-primary-foreground">
           Site do IBGE
         </a>
         <DropdownMenu>

@@ -30,12 +30,14 @@ const PaginationContainer = ({
   return (
     <Pagination>
       <PaginationContent className="gap-8">
-        <PaginationItem>
-          <PaginationPrevious
-            className="cursor-pointer"
-            onClick={() => setPage(page - 1)}
-          />
-        </PaginationItem>
+        {page !== 1 && (
+          <PaginationItem>
+            <PaginationPrevious
+              className="cursor-pointer"
+              onClick={() => setPage(page - 1)}
+            />
+          </PaginationItem>
+        )}
         {page > 2 && (
           <>
             <PaginationItem>
@@ -56,7 +58,9 @@ const PaginationContainer = ({
           <PaginationItem key={pageNumber}>
             <PaginationLink
               className={`cursor-pointer ${
-                pageNumber === page ? "bg-blue-500" : ""
+                pageNumber === page
+                  ? "bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground hover:scale-105"
+                  : ""
               }`}
               onClick={() => setPage(pageNumber)}
               isActive={pageNumber === page}
@@ -70,21 +74,24 @@ const PaginationContainer = ({
             <PaginationEllipsis />
           </PaginationItem>
         )}
-        <PaginationItem>
-          <PaginationLink
-            className="cursor-pointer"
-            onClick={() => setPage(data?.totalPages || 1)}
-            isActive={data?.totalPages === page}
-          >
-            {data?.totalPages}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext
-            className="cursor-pointer"
-            onClick={() => setPage(page + 1)}
-          />
-        </PaginationItem>
+        {page !== data?.totalPages && (
+          <PaginationItem>
+            <PaginationLink
+              className="cursor-pointer"
+              onClick={() => setPage(data?.totalPages || 1)}
+            >
+              {data?.totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+        {data && page < data.totalPages && (
+          <PaginationItem>
+            <PaginationNext
+              className="cursor-pointer"
+              onClick={() => setPage(page + 1)}
+            />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );
