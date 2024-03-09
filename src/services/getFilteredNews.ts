@@ -2,10 +2,10 @@ import { PaginatedResponse } from "@/interface/NewsInterface";
 import { api } from ".";
 
 // Adicionando novos parâmetros de consulta
-interface Params {
+export interface Params {
   de?: string;
   ate?: string;
-  destaque?: boolean;
+  destaque?: number;
   introsize?: number;
   busca?: string;
 }
