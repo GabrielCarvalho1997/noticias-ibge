@@ -15,11 +15,11 @@ interface CardContainerProps {
 }
 
 const CardContainer = ({ news }: CardContainerProps) => {
-  const images = JSON.parse(news.imagens);
+  const images = news.imagens ? JSON.parse(news.imagens) : [];
   return (
     <Card
       key={news.id}
-      className="flex flex-col items-center justify-between rounded-lg p-2"
+      className="flex flex-col items-center justify-between rounded-lg p-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
     >
       <CardHeader className="p-0 mb-6 flex items-center justify-center">
         <Image
