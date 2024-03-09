@@ -1,3 +1,4 @@
+import { SITE_IBGE } from "@/constants";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Roboto } from "next/font/google";
@@ -24,7 +25,9 @@ export const Header = () => {
     >
       <Link href="/">Página Inicial</Link>
       <nav className="hidden md:flex items-center gap-10 text-md">
-        <Link href="/sitedoIBGE">Site do IBGE</Link>
+        <a href={SITE_IBGE} target="_blank">
+          Site do IBGE
+        </a>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-13 h-7">
