@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "700", "900"],
 });
 
 export const Layout = ({ children }: LayoutProps) => {
