@@ -1,10 +1,5 @@
+import { PaginatedResponse } from "@/interface/NewsInterface";
 import { api } from ".";
-
-interface News {
-  id: string;
-  title: string;
-  description: string;
-}
 
 // Adicionando novos parâmetros de consulta
 interface Params {
@@ -15,11 +10,13 @@ interface Params {
   busca?: string;
 }
 
-export const getFilteredNews = async (params: Params): Promise<News[]> => {
+export const getFilteredNews = async (
+  params: Params
+): Promise<PaginatedResponse> => {
   const { de, ate, destaque, introsize, busca } = params;
 
   try {
-    const { data } = await api.get<News[]>("", {
+    const { data } = await api.get<PaginatedResponse>("", {
       params: {
         de: de,
         ate: ate,
@@ -31,6 +28,15 @@ export const getFilteredNews = async (params: Params): Promise<News[]> => {
     return data;
   } catch (error) {
     console.error(`Failed to get filtered news: ${error}`);
-    return [];
+    return {
+      count: 0,
+      page: 0,
+      totalPages: 0,
+      nextPage: 0,
+      previousPage: 0,
+      showingFrom: 0,
+      showingTo: 0,
+      items: [],
+    };
   }
 };

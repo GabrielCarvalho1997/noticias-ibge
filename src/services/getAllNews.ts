@@ -1,33 +1,8 @@
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
+import { PaginatedResponse } from "@/interface/NewsInterface";
 import { api } from ".";
 
-interface News {
-  id: number;
-  tipo: string;
-  titulo: string;
-  introducao: string;
-  data_publicacao: string;
-  produto_id: number;
-  produtos: string;
-  editorias: string;
-  imagens: string;
-  produtos_relacionados: string;
-  destaque: boolean;
-  link: string;
-}
-
-interface PaginatedResponse {
-  count: number;
-  page: number;
-  totalPages: number;
-  nextPage: number;
-  previousPage: number;
-  showingFrom: number;
-  showingTo: number;
-  items: News[];
-}
-
-export const getAllNews = async (): Promise<News[]> => {
+export const getAllNews = async (): Promise<PaginatedResponse> => {
   try {
     const { data } = await api.get<PaginatedResponse>("", {
       params: {
@@ -35,10 +10,18 @@ export const getAllNews = async (): Promise<News[]> => {
         qtd: DEFAULT_PAGE_SIZE,
       },
     });
-    const news = data.items;
-    return news;
+    return data;
   } catch (error) {
     console.error(`Failed to get all news: ${error}`);
-    return [];
+    return {
+      count: 0,
+      page: 0,
+      totalPages: 0,
+      nextPage: 0,
+      previousPage: 0,
+      showingFrom: 0,
+      showingTo: 0,
+      items: [],
+    };
   }
 };
