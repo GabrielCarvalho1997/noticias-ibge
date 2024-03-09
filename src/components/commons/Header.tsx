@@ -13,7 +13,7 @@ export const Header = () => {
 
   return (
     <header
-      className={`${roboto.className} text-sm flex py-3 px-5 justify-between items-center sticky top-0 z-20 bg-red-500`}
+      className={`${roboto.className} text-sm flex py-3 px-5 justify-between items-center sticky top-0 z-20 bg-red-600`}
     >
       <Link href="/">
         testando

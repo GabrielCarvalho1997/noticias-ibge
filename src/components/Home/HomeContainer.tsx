@@ -2,7 +2,14 @@ import { API_URL_IMAGE } from "@/constants";
 import { getAllNews } from "@/services/getAllNews";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { Card } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 const HomeContainer = () => {
   const { data, isLoading, isError } = useQuery({
@@ -22,22 +29,28 @@ const HomeContainer = () => {
         return (
           <Card
             key={news.id}
-            className="w-128 h-128 flex flex-col items-center bg-white shadow-lg rounded-lg overflow-hidden"
+            className="flex flex-col items-center rounded-lg p-2"
           >
-            <Image
-              src={API_URL_IMAGE + images.image_intro}
-              alt={news.titulo}
-              width={375}
-              height={250}
-              priority
-              unoptimized
-            />
-            <div className="px-5 py-4">
-              <h2 className="text-md text-justify font-bold mb-4">
+            <CardHeader className="p-0 w-full h-250 mb-6 flex items-center justify-center">
+              <Image
+                src={API_URL_IMAGE + images.image_intro}
+                alt={news.titulo}
+                width={375}
+                height={250}
+                priority
+                unoptimized
+                className="rounded-lg"
+              />
+            </CardHeader>
+            <CardContent className="px-2 w-full h-64">
+              <CardTitle className="text-md text-justify font-bold mb-4">
                 {news.titulo}
-              </h2>
-              <p className="text-sm text-gray-700">{news.introducao}</p>
-            </div>
+              </CardTitle>
+              <CardDescription className="text-sm">
+                {news.introducao}
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="w-full h-16">rodapé</CardFooter>
           </Card>
         );
       })}
