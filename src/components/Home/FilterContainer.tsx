@@ -30,24 +30,28 @@ type FilterProps = {
 const FilterContainer = ({ setFilters }: FilterContainerProps) => {
   const [date, setDate] = useState<DateRange | undefined>();
 
-  const { register, handleSubmit } = useForm<FilterProps>({
+  const { register, handleSubmit, reset, getValues } = useForm<FilterProps>({
     mode: "all",
     defaultValues: {
       date: {
         from: null,
         to: null,
       },
-      busca: " ",
-      introsize: 0,
+      busca: "",
+      introsize: undefined,
       destaque: true,
     },
   });
+
+  const clearFilters = () => {
+    reset();
+  };
 
   const onSubmit = (data: FilterProps) => {
     const filters: any = {
       de: date?.from ? format(date.from, "MM-dd-yyyy") : undefined,
       ate: date?.to ? format(date.to, "MM-dd-yyyy") : undefined,
-      destaque: Number(data.destaque),
+      destaque: data.destaque,
     };
 
     if (data.introsize) {
@@ -66,6 +70,17 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex justify-between w-full space-x-4 "
     >
+      <div className="flex flex-col  justify-center items-start gap-2">
+        <Label htmlFor="buscar" className="text-primary text-base font-bold">
+          Buscar
+        </Label>
+        <Input
+          id="buscar"
+          type="text"
+          placeholder="Insira um termo de busca"
+          {...register("busca")}
+        />
+      </div>
       <div className="flex flex-col  justify-center items-start gap-2">
         <Label htmlFor="date" className="text-primary text-base font-bold">
           Data
@@ -91,7 +106,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
                   format(date.from, "LLL dd, y")
                 )
               ) : (
-                <span>Esolha uma data</span>
+                <span>Escolha um período</span>
               )}
             </Button>
           </PopoverTrigger>
@@ -112,17 +127,6 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
         </Popover>
       </div>
       <div className="flex flex-col  justify-center items-start gap-2">
-        <Label htmlFor="buscar" className="text-primary text-base font-bold">
-          Buscar
-        </Label>
-        <Input
-          id="buscar"
-          type="text"
-          placeholder="Buscar"
-          {...register("busca")}
-        />
-      </div>
-      <div className="flex flex-col  justify-center items-start gap-2">
         <Label htmlFor="introsize" className="text-primary text-base font-bold">
           Tamanho do texto
         </Label>
@@ -137,7 +141,19 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
         <Label htmlFor="destaque" className="text-primary text-base font-bold">
           Destaque
         </Label>
-        <Switch id="destaque" {...register("destaque")} />
+        <Switch
+          checked={getValues("destaque")}
+          id="destaque"
+          {...register("destaque")}
+        />
+      </div>
+      <div className="flex flex-col justify-center items-start gap-2">
+        <Button
+          onClick={clearFilters}
+          className="w-32 hover:scale-105 bg-destructive hover:bg-destructive"
+        >
+          Limpar filtro
+        </Button>
       </div>
       <div className="flex flex-col justify-center items-start gap-2">
         <Button type="submit" className="w-32 hover:scale-105 hover:bg-primary">

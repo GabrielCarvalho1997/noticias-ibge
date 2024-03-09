@@ -1,5 +1,7 @@
 import { API_URL_IMAGE } from "@/constants";
 import { News } from "@/interface/NewsInterface";
+import { getAllNews } from "@/services/getAllNews";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import {
@@ -13,11 +15,35 @@ import {
 
 const News = () => {
   const router = useRouter();
-  const news: News = JSON.parse(router.query.news as string);
+  const { id, page, perPage } = router.query ?? {};
 
-  const images = news.imagens ? JSON.parse(news.imagens) : [];
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["filteredNews", id, page, perPage],
+    queryFn: () => filterdNews(),
+  });
 
-  console.log(images);
+  const filterdNews = async () => {
+    const result = await getAllNews({
+      page: Number(page),
+      perPage: Number(perPage),
+    });
+
+    return result.items.find((news: News) => news.id === Number(id));
+  };
+
+  const images = data?.imagens ? JSON.parse(data.imagens) : [];
+
+  if (isLoading) {
+    return <p className="text-lg text-center">Carregando...</p>;
+  }
+
+  if (!data || isError) {
+    return (
+      <p className="text-lg text-center text-red-500">
+        Ocorreu um erro ao carregar as notícias
+      </p>
+    );
+  }
 
   return (
     <main className="flex flex-col items-center min-h-screen py-6 px-6 md:px-32 space-y-2 md:space-y-4">
@@ -25,7 +51,7 @@ const News = () => {
         <CardHeader className="p-0 mb-6 flex items-center justify-center w-full">
           <Image
             src={API_URL_IMAGE + images.image_fulltext}
-            alt={news.titulo}
+            alt={data.titulo}
             width={600}
             height={400}
             priority
@@ -35,10 +61,10 @@ const News = () => {
         </CardHeader>
         <CardContent className="px-2 ">
           <CardTitle className="text-4xl font-bold mb-4 text-card-foreground">
-            {news.titulo}
+            {data.titulo}
           </CardTitle>
           <CardDescription className="w-full text-sm justify-end p-0 m-1 mb-3">
-            Data de publicação: {news.data_publicacao.split(" ")[0]}
+            Data de publicação: {data.data_publicacao.split(" ")[0]}
           </CardDescription>
           <CardDescription
             className="text-lg text-justify text-black"
@@ -47,17 +73,17 @@ const News = () => {
               textOverflow: "ellipsis",
             }}
           >
-            {news.introducao}
+            {data.introducao}
           </CardDescription>
         </CardContent>
         <CardFooter className="w-full text-sm justify-start p-0 pr-1 m-1">
           <span>Confira do site do IBGE:</span>
           <a
-            href={news.link}
+            href={data.link}
             target="_blank"
             className="overflow-hidden overflow-ellipsis whitespace-nowrap w-1/2 ml-2 text-blue-500 underline"
           >
-            {news.link}
+            {data.link}
           </a>
         </CardFooter>
       </Card>

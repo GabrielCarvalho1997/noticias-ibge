@@ -3,6 +3,8 @@ import { api } from ".";
 
 // Adicionando novos parâmetros de consulta
 export interface Params {
+  page: number;
+  perPage: number;
   de?: string;
   ate?: string;
   destaque?: number;
@@ -13,11 +15,13 @@ export interface Params {
 export const getFilteredNews = async (
   params: Params
 ): Promise<PaginatedResponse> => {
-  const { de, ate, destaque, introsize, busca } = params;
+  const { page, perPage, de, ate, destaque, introsize, busca } = params;
 
   try {
     const { data } = await api.get<PaginatedResponse>("", {
       params: {
+        page: page,
+        qtd: perPage,
         de: de,
         ate: ate,
         destaque: destaque,

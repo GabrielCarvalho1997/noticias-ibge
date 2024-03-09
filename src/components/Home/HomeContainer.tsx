@@ -2,6 +2,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 import { getAllNews } from "@/services/getAllNews";
 import { Params, getFilteredNews } from "@/services/getFilteredNews";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import CardContainer from "./CardContainer";
@@ -9,8 +10,8 @@ import FilterContainer from "./FilterContainer";
 import PaginationContainer from "./PaginationContainer";
 
 const HomeContainer = () => {
-  const [page, setPage] = useState(DEFAULT_PAGE);
-  const [perPage, setPerPage] = useState(DEFAULT_PAGE_SIZE);
+  const [page, setPage] = useState<number>(DEFAULT_PAGE);
+  const [perPage, setPerPage] = useState<number>(DEFAULT_PAGE_SIZE);
   const [filters, setFilters] = useState<Params>();
 
   const { data, isLoading, isError } = useQuery({
@@ -18,9 +19,11 @@ const HomeContainer = () => {
     queryFn: filters
       ? () =>
           getFilteredNews({
+            page: page,
+            perPage: perPage,
             de: filters.de,
             ate: filters.ate,
-            destaque: filters.destaque,
+            destaque: filters.destaque ? 1 : 0,
             introsize: filters.introsize,
             busca: filters.busca,
           })
@@ -38,16 +41,32 @@ const HomeContainer = () => {
           </p>
         )}
         {data?.items.map((news) => {
-          return <CardContainer key={news.id} news={news} />;
+          return (
+            <Link
+              key={news.id}
+              href={{
+                pathname: `/${news.id}`,
+                query: {
+                  id: news.id,
+                  page: page,
+                  perPage: perPage,
+                },
+              }}
+            >
+              <CardContainer news={news} />
+            </Link>
+          );
         })}
-        <Button
-          className="w-32 hover:scale-105 hover:bg-primary"
-          onClick={() => {
-            setPerPage(perPage + 12);
-          }}
-        >
-          Ver mais
-        </Button>
+        {data && data?.count > 12 && (
+          <Button
+            className="col-start-1 w-32 hover:scale-105 hover:bg-primary"
+            onClick={() => {
+              setPerPage(perPage + 12);
+            }}
+          >
+            Ver mais
+          </Button>
+        )}
       </main>
 
       <PaginationContainer data={data} page={page} setPage={setPage} />
