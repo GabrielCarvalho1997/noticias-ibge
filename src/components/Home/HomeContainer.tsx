@@ -16,20 +16,22 @@ const HomeContainer = () => {
   const [perPage, setPerPage] = useState<number>(DEFAULT_PAGE_SIZE);
   const [filters, setFilters] = useState<Params>();
 
+  const queryFn = filters
+    ? () =>
+        getFilteredNews({
+          page: page,
+          perPage: perPage,
+          de: filters.de,
+          ate: filters.ate,
+          destaque: filters.destaque ? 1 : 0,
+          introsize: filters.introsize,
+          busca: filters.busca,
+        })
+    : () => getAllNews({ page: page, perPage: perPage });
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["news", page, perPage, filters],
-    queryFn: filters
-      ? () =>
-          getFilteredNews({
-            page: page,
-            perPage: perPage,
-            de: filters.de,
-            ate: filters.ate,
-            destaque: filters.destaque ? 1 : 0,
-            introsize: filters.introsize,
-            busca: filters.busca,
-          })
-      : () => getAllNews({ page: page, perPage: perPage }),
+    queryFn: queryFn,
   });
 
   if (isError) {

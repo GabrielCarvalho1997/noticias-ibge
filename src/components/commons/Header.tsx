@@ -23,11 +23,21 @@ export const Header = () => {
     <header
       className={`${roboto.className} text-sm flex py-3 px-5 justify-between items-center sticky top-0 z-20 bg-primary`}
     >
-      <Link href="/" className="text-xl	font-bold text-primary-foreground">
+      <Link
+        href="/"
+        className="text-xl	font-bold text-primary-foreground hover:bg-purple-950 p-2 rounded-md transition-all"
+      >
         Página Inicial
       </Link>
+      <h1 className="text-3xl font-bold text-primary-foreground">
+        Notícias IBGE
+      </h1>
       <nav className="flex items-center gap-10 text-md ">
-        <a href={SITE_IBGE} target="_blank" className="text-primary-foreground">
+        <a
+          href={SITE_IBGE}
+          target="_blank"
+          className="text-primary-foreground hover:bg-purple-950 p-2 rounded-md transition-all"
+        >
           Site do IBGE
         </a>
         <DropdownMenu>

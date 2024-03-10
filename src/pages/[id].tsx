@@ -35,7 +35,11 @@ const News = () => {
 
   const images = data?.imagens ? JSON.parse(data.imagens) : [];
 
-  if (!data || isError) {
+  if (!data || isLoading) {
+    return <Skeleton className="w-full" />;
+  }
+
+  if (isError) {
     toast("Ocorreu um erro ao carregar a notícia", {
       description: "Tente novamente mais tarde",
       action: {
@@ -73,7 +77,7 @@ const News = () => {
             Data de publicação: {data.data_publicacao.split(" ")[0]}
           </CardDescription>
           <CardDescription
-            className="text-lg md:text-xl lg:text-2xl text-justify text-black"
+            className="text-lg md:text-xl lg:text-2xl text-justify text-black dark:text-white"
             style={{
               overflow: "hidden",
               textOverflow: "ellipsis",
