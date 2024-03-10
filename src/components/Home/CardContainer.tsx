@@ -19,7 +19,7 @@ const CardContainer = ({ news }: CardContainerProps) => {
   return (
     <Card
       key={news.id}
-      className="flex flex-col items-center justify-between rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-800 h-[550px] transform transition hover:scale-105"
+      className="flex flex-col items-center justify-between rounded-lg p-2 hover:bg-purple-100 dark:hover:bg-gray-600 h-[550px] transform transition hover:scale-105"
     >
       <CardHeader className="p-0 mb-6 flex items-center justify-center">
         <Image

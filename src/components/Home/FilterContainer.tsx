@@ -44,6 +44,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
   });
 
   const clearFilters = () => {
+    setDate(undefined);
     reset();
   };
 
@@ -68,9 +69,9 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-between w-full space-x-4 "
+      className="flex flex-col md:flex-row justify-between w-full space-y-4 md:space-y-0 md:space-x-4"
     >
-      <div className="flex flex-col  justify-center items-start gap-2">
+      <div className="flex flex-col justify-between items-start gap-2">
         <Label htmlFor="buscar" className="text-primary text-base font-bold">
           Buscar
         </Label>
@@ -81,7 +82,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
           {...register("busca")}
         />
       </div>
-      <div className="flex flex-col  justify-center items-start gap-2">
+      <div className="flex flex-col justify-between items-start gap-2">
         <Label htmlFor="date" className="text-primary text-base font-bold">
           Data
         </Label>
@@ -126,7 +127,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="flex flex-col  justify-center items-start gap-2">
+      <div className="flex flex-col justify-between items-start gap-2">
         <Label htmlFor="introsize" className="text-primary text-base font-bold">
           Tamanho do texto
         </Label>
@@ -137,12 +138,12 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
           {...register("introsize")}
         />
       </div>
-      <div className="flex flex-col justify-center items-start gap-2">
+      <div className="flex flex-col justify-between items-start gap-2">
         <Label htmlFor="destaque" className="text-primary text-base font-bold">
           Destaque
         </Label>
         <Switch
-          checked={getValues("destaque")}
+          defaultChecked={getValues("destaque")}
           id="destaque"
           {...register("destaque")}
         />

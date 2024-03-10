@@ -33,7 +33,7 @@ const HomeContainer = () => {
   return (
     <>
       <FilterContainer setFilters={setFilters} />
-      <main className="grid grid-cols-3 flex-wrap-reverse gap-10 md:gap-12 p-5">
+      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap-reverse gap-10 md:gap-12 p-5">
         {isLoading && <p className="text-lg text-center">Carregando...</p>}
         {isError && (
           <p className="text-lg text-center text-red-500">
