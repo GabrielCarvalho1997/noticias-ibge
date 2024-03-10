@@ -1,9 +1,11 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { API_URL_IMAGE } from "@/constants";
 import { News } from "@/interface/NewsInterface";
 import { getAllNews } from "@/services/getAllNews";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -33,11 +35,14 @@ const News = () => {
 
   const images = data?.imagens ? JSON.parse(data.imagens) : [];
 
-  if (isLoading) {
-    return <p className="text-lg text-center">Carregando...</p>;
-  }
-
   if (!data || isError) {
+    toast("Ocorreu um erro ao carregar a notícia", {
+      description: "Tente novamente mais tarde",
+      action: {
+        label: "Recarregar",
+        onClick: () => window.location.reload(),
+      },
+    });
     return (
       <p className="text-lg text-center text-red-500">
         Ocorreu um erro ao carregar as notícias
@@ -47,6 +52,7 @@ const News = () => {
 
   return (
     <main className="flex flex-col items-center py-6 px-6 space-y-2 md:space-y-4">
+      {isLoading && <Skeleton className="w-full" />}
       <Card className="flex flex-col items-center justify-between rounded-lg p-4 md:w-4/5 lg:w-4/6 xl:w-3/5">
         <CardHeader className="p-0 mb-6 flex items-center justify-center w-full">
           <Image

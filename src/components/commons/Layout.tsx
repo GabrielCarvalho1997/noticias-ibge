@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/provider/ThemeProvider";
 import { Inter } from "next/font/google";
+import { Toaster } from "../ui/sonner";
 import { Header } from "./Header";
 
 interface LayoutProps {
@@ -22,6 +23,7 @@ export const Layout = ({ children }: LayoutProps) => {
       >
         <Header />
         {children}
+        <Toaster />
       </ThemeProvider>
     </div>
   );

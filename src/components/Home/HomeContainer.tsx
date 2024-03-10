@@ -4,7 +4,9 @@ import { Params, getFilteredNews } from "@/services/getFilteredNews";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 import CardContainer from "./CardContainer";
 import FilterContainer from "./FilterContainer";
 import PaginationContainer from "./PaginationContainer";
@@ -30,16 +32,26 @@ const HomeContainer = () => {
       : () => getAllNews({ page: page, perPage: perPage }),
   });
 
+  if (isError) {
+    toast("Ocorreu um erro ao carregar as notícias", {
+      description: "Tente novamente mais tarde",
+      action: {
+        label: "Recarregar",
+        onClick: () => window.location.reload(),
+      },
+    });
+    return (
+      <p className="text-lg text-center text-red-500">
+        Ocorreu um erro ao carregar as notícias
+      </p>
+    );
+  }
+
   return (
     <>
       <FilterContainer setFilters={setFilters} />
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap-reverse gap-10 md:gap-12 p-5">
-        {isLoading && <p className="text-lg text-center">Carregando...</p>}
-        {isError && (
-          <p className="text-lg text-center text-red-500">
-            Ocorreu um erro ao carregar as notícias
-          </p>
-        )}
+        {isLoading && <Skeleton className="w-full" />}
         {data?.items.map((news) => {
           return (
             <Link
