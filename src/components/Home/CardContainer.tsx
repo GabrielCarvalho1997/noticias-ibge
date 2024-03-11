@@ -18,7 +18,7 @@ const CardContainer = ({ news }: CardContainerProps) => {
   const images = news.imagens ? JSON.parse(news.imagens) : [];
   return (
     <Card className="flex flex-col items-center justify-between rounded-lg overflow-hidden hover:bg-purple-100 dark:hover:bg-gray-600 h-[550px] transform transition hover:scale-105">
-      <CardHeader className="p-0 mb-6 flex items-center justify-center">
+      <CardHeader className="p-0 mb-2 flex items-center justify-center">
         <Image
           src={API_URL_IMAGE + images.image_intro}
           alt={news.titulo}
@@ -29,12 +29,12 @@ const CardContainer = ({ news }: CardContainerProps) => {
           className="w-full"
         />
       </CardHeader>
-      <CardContent className="px-2">
+      <CardContent className="p-4 flex-1 flex flex-col">
         <CardTitle className="text-lg leading-tight font-bold mb-4 text-card-foreground">
           {news.titulo}
         </CardTitle>
         <CardDescription
-          className="text-sm text-justify"
+          className="text-sm leading-relaxed text-justify"
           style={{
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -42,10 +42,10 @@ const CardContainer = ({ news }: CardContainerProps) => {
         >
           {news.introducao}
         </CardDescription>
+        <CardFooter className="w-full text-xs justify-end p-0 mt-auto">
+          Data de publicação: {news.data_publicacao.split(" ")[0]}
+        </CardFooter>
       </CardContent>
-      <CardFooter className="w-full text-xs justify-end p-0 pr-1 m-1">
-        Data de publicação: {news.data_publicacao.split(" ")[0]}
-      </CardFooter>
     </Card>
   );
 };

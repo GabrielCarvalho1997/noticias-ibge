@@ -72,7 +72,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
       className="flex flex-col md:flex-row justify-between w-full space-y-4 md:space-y-0 md:space-x-4"
     >
       <div className="flex flex-col justify-between items-start gap-2">
-        <Label htmlFor="buscar" className="text-primary text-base font-bold">
+        <Label htmlFor="buscar" className="text-primary text-base font-bold dark:text-zinc-300">
           Buscar
         </Label>
         <Input
@@ -83,7 +83,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
         />
       </div>
       <div className="flex flex-col justify-between items-start gap-2">
-        <Label htmlFor="date" className="text-primary text-base font-bold">
+        <Label htmlFor="date" className="text-primary text-base font-bold dark:text-zinc-300">
           Data
         </Label>
         <Popover>
@@ -128,7 +128,7 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
         </Popover>
       </div>
       <div className="flex flex-col justify-between items-start gap-2">
-        <Label htmlFor="introsize" className="text-primary text-base font-bold">
+        <Label htmlFor="introsize" className="text-primary text-base font-bold dark:text-zinc-300">
           Tamanho do texto
         </Label>
         <Input
@@ -139,10 +139,11 @@ const FilterContainer = ({ setFilters }: FilterContainerProps) => {
         />
       </div>
       <div className="flex flex-col justify-between items-start gap-2">
-        <Label htmlFor="destaque" className="text-primary text-base font-bold">
+        <Label htmlFor="destaque" className="text-primary text-base font-bold dark:text-zinc-300">
           Destaque
         </Label>
         <Switch
+          className="data-[state='unchecked']:dark:bg-muted-foreground"
           defaultChecked={getValues("destaque")}
           id="destaque"
           {...register("destaque")}
