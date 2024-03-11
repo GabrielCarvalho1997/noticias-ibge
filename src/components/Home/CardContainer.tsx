@@ -17,7 +17,7 @@ interface CardContainerProps {
 const CardContainer = ({ news }: CardContainerProps) => {
   const images = news.imagens ? JSON.parse(news.imagens) : [];
   return (
-    <Card className="flex flex-col items-center justify-between rounded-lg p-2 hover:bg-purple-100 dark:hover:bg-gray-600 h-[550px] transform transition hover:scale-105">
+    <Card className="flex flex-col items-center justify-between rounded-lg overflow-hidden hover:bg-purple-100 dark:hover:bg-gray-600 h-[550px] transform transition hover:scale-105">
       <CardHeader className="p-0 mb-6 flex items-center justify-center">
         <Image
           src={API_URL_IMAGE + images.image_intro}
@@ -26,11 +26,11 @@ const CardContainer = ({ news }: CardContainerProps) => {
           height={250}
           priority
           unoptimized
-          className="rounded-lg"
+          className="w-full"
         />
       </CardHeader>
       <CardContent className="px-2">
-        <CardTitle className="text-md font-bold mb-4 text-card-foreground">
+        <CardTitle className="text-lg leading-tight font-bold mb-4 text-card-foreground">
           {news.titulo}
         </CardTitle>
         <CardDescription
