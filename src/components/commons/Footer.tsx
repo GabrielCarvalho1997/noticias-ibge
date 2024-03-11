@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="text-sm flex py-3 px-5 justify-center items-center sticky bottom-0 z-20 bg-primary">
+    <footer className="text-sm flex py-3 px-5 justify-center items-center static bottom-0 z-20 bg-primary">
       <a
         href="https://www.linkedin.com/in/gabriel-coelho-carvalho/"
         target="_blank"
